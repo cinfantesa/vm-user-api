@@ -1,7 +1,7 @@
 require('dotenv').config();
-
 const { port } = require('./infrastructure/config').server;
 const express = require('express');
+const helmet = require('helmet');
 
 const userRoutes = require('./infrastructure/rest/user-controller');
 const bodyParser = require('body-parser');
@@ -9,6 +9,7 @@ const jsonContentType = require('./infrastructure/rest/middleware/json-content-t
 const errorHandler = require('./infrastructure/rest/middleware/error-handler');
 
 const app = express();
+app.use(helmet());
 app.use(bodyParser.json());
 app.use(jsonContentType);
 

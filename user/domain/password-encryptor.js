@@ -1,6 +1,6 @@
-const PasswordEncryptor = () => {
+const PasswordEncryptor = ({ bcryptPasswordEncryptor }) => {
   return {
-    encrypt: async (password) => password
+    encrypt: async (password) => bcryptPasswordEncryptor.encrypt(password)
   };
 };
 
