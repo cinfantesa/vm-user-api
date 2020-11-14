@@ -1,4 +1,5 @@
 const RegisterUser = require('../../../application/register-user');
+const User = require('../../../domain/user');
 
 describe('Register user', () => {
   let userRepositoryMock;
@@ -12,7 +13,7 @@ describe('Register user', () => {
     };
 
     passwordEncryptorMock = {
-
+      encrypt: jest.fn()
     };
 
     registerUser = new RegisterUser({ userRepository: userRepositoryMock, passwordEncryptor: passwordEncryptorMock })
@@ -36,5 +37,34 @@ describe('Register user', () => {
 
     expect(userRepositoryMock.existsByEmail.mock.calls.length).toBe(1);
     expect(userRepositoryMock.existsByEmail.mock.calls[0][0]).toBe(user.info.email);
+  });
+
+  test('should save user', async () => {
+    userRepositoryMock.existsByEmail.mockReturnValue(false);
+    passwordEncryptorMock.encrypt.mockReturnValue('encryptedPassword');
+
+    const user = {
+      id: '5ed4e0fd385b75ad664e66d2',
+      name: { firstName: 'firstName'},
+      info: { email: 'email' },
+      password:'password'
+    };
+
+    await registerUser.register(user);
+
+    expect(userRepositoryMock.existsByEmail.mock.calls.length).toBe(1);
+    expect(userRepositoryMock.existsByEmail.mock.calls[0][0]).toBe(user.info.email);
+    expect(userRepositoryMock.save.mock.calls.length).toBe(1);
+
+    const expectedUser = new User({
+      id: '5ed4e0fd385b75ad664e66d2',
+      name: { firstName: 'firstName'},
+      info: { email: 'email' },
+      password:'encryptedPassword'
+    });
+
+    expect(userRepositoryMock.save.mock.calls[0][0]).toEqual(expectedUser);
+    expect(passwordEncryptorMock.encrypt.mock.calls.length).toEqual(1);
+    expect(passwordEncryptorMock.encrypt.mock.calls[0][0]).toEqual('password');
   });
 });

@@ -14,7 +14,7 @@ class RegisterUser {
       throw new Error(`User with given email ${info.email} already exists`);
     }
 
-    const encryptedPassword = await this._passwordEncryptor(info.email);
+    const encryptedPassword = await this._passwordEncryptor.encrypt(password);
     const user = new User({ id, name, info, password: encryptedPassword });
     await this._userRepository.save(user);
   }

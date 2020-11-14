@@ -5,8 +5,8 @@ class User {
   constructor({ id, name = {}, info = {}, password }) {
     this.id = id;
     this.name = name;
-    this.info = info;
     this.password = password;
+    this.info = info;
   }
 
   set id(id) {
@@ -15,6 +15,19 @@ class User {
     }
     this._id = id;
   }
+
+  get password() {
+    return this._password;
+  }
+
+  get info() {
+    return this._info;
+  }
+
+  get name() {
+    return this._name;
+  }
+
   set password(password) {
     if (!password) {
       throw new Error('Password required');
