@@ -1,14 +1,22 @@
 const User = require('../../domain/user');
 
 class RegisterUser {
-  constructor({ userRepository }) {
-    this.userRepository = userRepository;
+  constructor({ userRepository, passwordEncryptor }) {
+    this._userRepository = userRepository;
+    this._passwordEncryptor = passwordEncryptor;
   }
 
 
   async register({ id, name, info, password }) {
-    const user = new User({ id, name, info, password});
-    await this.userRepository.save(user);
+    const userExists = this._userRepository.existsByEmail(info.email);
+
+    if (userExists) {
+      throw new Error(`User with given email ${info.email} already exists`);
+    }
+
+    const encryptedPassword = await this._passwordEncryptor(info.email);
+    const user = new User({ id, name, info, password: encryptedPassword });
+    await this._userRepository.save(user);
   }
 }
 
