@@ -1,7 +1,7 @@
-const UserRepository = () => {
+const UserRepository = ({ mongoUserRepository }) => {
   return {
-    save: async (user) => console.log('saving user', user),
-    existsByEmail: async (email) => email === 'pepe@gmail.com'
+    save: async (user) => await mongoUserRepository.save(user),
+    findByEmail: async (email) => await mongoUserRepository.findByEmail(email)
   }
 };
 

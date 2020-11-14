@@ -9,6 +9,10 @@ class User {
     this.info = info;
   }
 
+  get id() {
+    return this._id;
+  }
+
   set id(id) {
     if (!id) {
       throw new Error('Id required');

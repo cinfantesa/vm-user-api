@@ -3,6 +3,8 @@ const Awilix = require('awilix');
 const RegisterUser = require('./application/register-user');
 const UserRepository = require('./domain/user-repository');
 const PasswordEncryptor = require('./domain/password-encryptor');
+const MongoUserRepository = require('./infrastructure/persistence/mongo-user-repository');
+const MongoHandler = require('./infrastructure/persistence/mongo-handler');
 
 const container = Awilix.createContainer({
   injectionMode: Awilix.InjectionMode.PROXY
@@ -11,7 +13,9 @@ const container = Awilix.createContainer({
 container.register({
   registerUser: Awilix.asClass(RegisterUser),
   userRepository: Awilix.asFunction(UserRepository),
-  passwordEncryptor: Awilix.asFunction(PasswordEncryptor)
+  passwordEncryptor: Awilix.asFunction(PasswordEncryptor),
+  db: Awilix.asClass(MongoHandler),
+  mongoUserRepository: Awilix.asClass(MongoUserRepository)
 });
 
 module.exports = container;

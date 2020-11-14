@@ -8,7 +8,7 @@ describe('Register user', () => {
 
   beforeEach(() => {
     userRepositoryMock = {
-      existsByEmail: jest.fn(),
+      findByEmail: jest.fn(),
       save: jest.fn()
     };
 
@@ -20,7 +20,7 @@ describe('Register user', () => {
   });
 
   test('should throw exception when user already exists', async () => {
-    userRepositoryMock.existsByEmail.mockReturnValue(true);
+    userRepositoryMock.findByEmail.mockReturnValue(true);
 
     const user = {
       id: '5ed4e0fd385b75ad664e66d2',
@@ -35,12 +35,12 @@ describe('Register user', () => {
       expect(message).toEqual(`User with given email ${user.info.email} already exists`)
     }
 
-    expect(userRepositoryMock.existsByEmail.mock.calls.length).toBe(1);
-    expect(userRepositoryMock.existsByEmail.mock.calls[0][0]).toBe(user.info.email);
+    expect(userRepositoryMock.findByEmail.mock.calls.length).toBe(1);
+    expect(userRepositoryMock.findByEmail.mock.calls[0][0]).toBe(user.info.email);
   });
 
   test('should save user', async () => {
-    userRepositoryMock.existsByEmail.mockReturnValue(false);
+    userRepositoryMock.findByEmail.mockReturnValue(false);
     passwordEncryptorMock.encrypt.mockReturnValue('encryptedPassword');
 
     const user = {
@@ -52,8 +52,8 @@ describe('Register user', () => {
 
     await registerUser.register(user);
 
-    expect(userRepositoryMock.existsByEmail.mock.calls.length).toBe(1);
-    expect(userRepositoryMock.existsByEmail.mock.calls[0][0]).toBe(user.info.email);
+    expect(userRepositoryMock.findByEmail.mock.calls.length).toBe(1);
+    expect(userRepositoryMock.findByEmail.mock.calls[0][0]).toBe(user.info.email);
     expect(userRepositoryMock.save.mock.calls.length).toBe(1);
 
     const expectedUser = new User({
