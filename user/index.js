@@ -1,11 +1,20 @@
 require('dotenv').config();
 
-const container = require('./containers');
+const { port } = require('./infrastructure/config').server;
+const express = require('express');
 
-const registerUser = container.resolve('registerUser');
-registerUser.register({
-  id: 1,
-  name: { firstName: 'pepe', surnames: 'viyuela'},
-  info: { email: 'pepe@gmail.com', country: 'ES', phone: '666555444', postalCode: '23700' },
-  password: '12345678'
-});
+const userRoutes = require('./infrastructure/rest/user-controller');
+const bodyParser = require('body-parser');
+const jsonContentType = require('./infrastructure/rest/middleware/json-content-type');
+const errorHandler = require('./infrastructure/rest/middleware/error-handler');
+
+const app = express();
+app.use(bodyParser.json());
+app.use(jsonContentType);
+
+app.use('/users', userRoutes);
+
+app.use(errorHandler);
+
+const server = app.listen(port, () => console.log(`User module listening at http://localhost:${port}`));
+module.exports = { app, server };
