@@ -7,6 +7,12 @@ const development = {
   database: {
     uri: process.env.MONGO_URI,
     name: 'voicemod'
+  },
+  security: {
+    jwt: {
+      secret: process.env.SECURITY_JWT_SECRET || 'secret',
+      expiration: process.env.SECURITY_JWT_EXPIRATION || '1h'
+    }
   }
 };
 
@@ -17,6 +23,12 @@ const test = {
   database: {
     uri: process.env.MONGO_URI,
     name: 'test'
+  },
+  security: {
+    jwt: {
+      secret: 'secret',
+      expiration: '1h'
+    }
   }
 };
 
