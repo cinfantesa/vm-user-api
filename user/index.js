@@ -13,7 +13,7 @@ app.use(helmet());
 app.use(bodyParser.json());
 app.use(jsonContentType);
 
-app.use('/users', userRoutes);
+app.use(userRoutes);
 
 app.use(errorHandler);
 

@@ -4,10 +4,11 @@ const router = express.Router();
 
 const container = require('../../containers');
 const registerUser = container.resolve('registerUser');
+const loginUser = container.resolve('loginUser');
 
 const { isBodyValid } = require('../../infrastructure/rest/middleware/rest-validator');
 
-router.post('/', [
+router.post('/users', [
   check('id').notEmpty(),
   check('name').notEmpty(),
   check('password')
@@ -31,6 +32,24 @@ router.post('/', [
     await registerUser.register(request);
 
     return res.status(201).send();
+  } catch (ex) {
+    next(ex);
+  }
+});
+
+router.post('/login', [
+  check('email')
+    .notEmpty()
+    .bail()
+    .isEmail(),
+  check('password')
+    .notEmpty()
+], isBodyValid, async (req, res, next) => {
+  const { email, password } = req.body;
+
+  try {
+    const token = await loginUser.login({ email, password });
+    res.status(200).send({ token });
   } catch (ex) {
     next(ex);
   }
