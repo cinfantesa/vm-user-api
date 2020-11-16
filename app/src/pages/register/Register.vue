@@ -1,5 +1,5 @@
 <template>
-  <p>Register</p>
+  <p>{{name}}</p>
 </template>
 
 <script>

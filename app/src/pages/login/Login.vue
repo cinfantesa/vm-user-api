@@ -1,10 +1,10 @@
 <template>
-  <p>Login</p>
+  <p>{{name}}</p>
 </template>
 
 <script>
 export default {
-  name: "login"
+  name: "Login"
 }
 </script>
 

@@ -1,31 +1,28 @@
 <template>
-  <div id="nav">
-    <router-link to="/login">Login</router-link> |
-    <router-link to="/register">Register</router-link> |
-    <router-link to="/home">Home</router-link>
-  </div>
-  <router-view/>
+  <v-app>
+    <v-app-bar
+      app
+      color="primary"
+      dense
+      dark
+    >
+      <v-toolbar-title>Login</v-toolbar-title>
+    </v-app-bar>
+
+    <v-main>
+      <router-view/>
+    </v-main>
+  </v-app>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+export default {
+  name: 'App',
 
-#nav {
-  padding: 30px;
-}
+  components: {},
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+  data: () => ({
+    //
+  }),
+};
+</script>

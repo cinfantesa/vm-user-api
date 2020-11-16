@@ -1,6 +1,8 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import Vue from 'vue'
+import VueRouter from 'vue-router'
 import Login from '@/pages/login/Login';
-import Register from '@/pages/register/Register';
+
+Vue.use(VueRouter)
 
 const routes = [
   {
@@ -9,19 +11,18 @@ const routes = [
     component: Login
   },
   {
+    path: '/register',
+    name: 'Register',
+    component: () => import('@/pages/register/Register')
+  },
+  {
     path: '/home',
     name: 'Home',
     component: () => import('@/pages/home/Home')
-  },
-  {
-    path: '/register',
-    name: 'Register',
-    component: Register
   }
 ]
 
-const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+const router = new VueRouter({
   routes
 })
 

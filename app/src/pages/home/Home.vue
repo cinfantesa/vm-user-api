@@ -1,5 +1,5 @@
 <template>
-  <p>Home</p>
+  <p>{{name}}</p>
 </template>
 
 <script>
