@@ -9,6 +9,7 @@ const updateUser = container.resolve('updateUser');
 const deleteUser = container.resolve('deleteUser');
 
 const { isBodyValid } = require('../../infrastructure/rest/middleware/rest-validator');
+const authValidator = require('../../infrastructure/rest/middleware/auth-validator');
 
 router.post('/users', [
   check('id').notEmpty(),
@@ -72,7 +73,7 @@ router.put('/users/:id', [
     .notEmpty()
     .bail()
     .isEmail()
-], isBodyValid, async (req, res, next) => {
+], isBodyValid, authValidator, async (req, res, next) => {
   const { name, surnames, postalCode, country, email, phone, password, newPassword } = req.body;
   const request = {
     id: req.params.id,
@@ -90,7 +91,7 @@ router.put('/users/:id', [
   }
 });
 
-router.delete('/users/:id', async (req, res, next) => {
+router.delete('/users/:id', authValidator, async (req, res, next) => {
   try {
     const id = req.params.id;
     await deleteUser.delete(id);

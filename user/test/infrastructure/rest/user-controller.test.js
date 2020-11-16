@@ -14,6 +14,10 @@ const deleteUserMock = {
   delete: jest.fn()
 };
 
+jest.mock('../../../infrastructure/rest/middleware/auth-validator',
+  () => jest.fn((req, res, next) =>
+    next()));
+
 const container = require('../../../containers');
 const Awilix = require('awilix');
 container.register({
