@@ -254,7 +254,7 @@ describe('User controller', () => {
   describe('DELETE user', () => {
     test('should return 204 status when deleting a user', async () => {
       const res = await request.delete('/users/1').send();
-      
+
       const { status } = res;
       expect(status).toBe(204);
     });

@@ -23,6 +23,14 @@ class AuthenticationService {
       expiresIn: expiration
     });
   }
+
+  async isAuthenticated(token) {
+    try {
+      return jwt.verify(token, secret);
+    } catch (ex) {
+      throw new Error('Invalid token');
+    }
+  }
 }
 
 module.exports = AuthenticationService;
