@@ -93,4 +93,19 @@ describe('User mongo repository', () => {
 
     expect(actualUser).toEqual(expectedUser);
   });
+
+  test('should delete user', async () => {
+    const removeMock = jest.fn(() => Promise.resolve({}));
+    const collectionMock = {
+      collection: () => {
+        return { remove: removeMock }
+      }
+    };
+    dbMock.connect.mockReturnValue(collectionMock);
+
+    await mongoUserRepository.delete('id');
+
+    expect(removeMock.mock.calls.length).toBe(1);
+    expect(removeMock.mock.calls[0][0]).toEqual({ _id: 'id' });
+  });
 });

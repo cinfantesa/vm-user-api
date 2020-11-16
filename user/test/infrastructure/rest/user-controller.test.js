@@ -10,12 +10,17 @@ const updateUserMock = {
   update: jest.fn()
 };
 
+const deleteUserMock = {
+  delete: jest.fn()
+};
+
 const container = require('../../../containers');
 const Awilix = require('awilix');
 container.register({
   registerUser: Awilix.asValue(registerUserMock),
   loginUser: Awilix.asValue(loginUserMock),
-  updateUser: Awilix.asValue(updateUserMock)
+  updateUser: Awilix.asValue(updateUserMock),
+  deleteUser: Awilix.asValue(deleteUserMock)
 });
 
 const { app, server } = require('../../../index');
@@ -243,6 +248,26 @@ describe('User controller', () => {
 
       const { status } = res;
       expect(status).toBe(204);
+    });
+  });
+
+  describe('DELETE user', () => {
+    test('should return 204 status when deleting a user', async () => {
+      const res = await request.delete('/users/1').send();
+      
+      const { status } = res;
+      expect(status).toBe(204);
+    });
+
+    test('should return 500 status when deleting a user an error produced', async () => {
+      deleteUserMock.delete.mockRejectedValue('Error');
+
+      const res = await request.delete('/users/1').send();
+
+      const { status, body, headers } = res;
+      expect(status).toBe(500);
+      expect(body).toEqual({ error: 'Error' });
+      expect(headers['content-type']).toContain('application/json');
     });
   });
 

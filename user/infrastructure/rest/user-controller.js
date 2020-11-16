@@ -6,6 +6,7 @@ const container = require('../../containers');
 const registerUser = container.resolve('registerUser');
 const loginUser = container.resolve('loginUser');
 const updateUser = container.resolve('updateUser');
+const deleteUser = container.resolve('deleteUser');
 
 const { isBodyValid } = require('../../infrastructure/rest/middleware/rest-validator');
 
@@ -83,6 +84,16 @@ router.put('/users/:id', [
 
   try {
     await updateUser.update(request);
+    return res.status(204).send();
+  } catch (ex) {
+    next(ex);
+  }
+});
+
+router.delete('/users/:id', async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    await deleteUser.delete(id);
     return res.status(204).send();
   } catch (ex) {
     next(ex);
