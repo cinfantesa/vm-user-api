@@ -94,7 +94,7 @@ router.put('/users/:id', [
 router.delete('/users/:id', authValidator, async (req, res, next) => {
   try {
     const id = req.params.id;
-    await deleteUser.delete(id);
+    await deleteUser.delete({ id });
     return res.status(204).send();
   } catch (ex) {
     next(ex);

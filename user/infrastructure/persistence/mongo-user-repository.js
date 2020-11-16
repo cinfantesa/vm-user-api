@@ -24,7 +24,7 @@ class MongoUserRepository {
 
   async delete(id) {
     const conn = await this._db.connect();
-    await conn.collection('users').remove({ _id: id });
+    await conn.collection('users').deleteOne({ _id: id });
 
     this._db.disconnect();
   }
