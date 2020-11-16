@@ -1,4 +1,4 @@
-module.exports = (err, req, res) => {
+module.exports = async (err, req, res, next) => {
   if (process.env.NODE_ENV !== 'test') {
     console.error(err.stack || err);
   }

@@ -21,7 +21,7 @@ class UpdateUser {
       throw new Error(`Password invalid`);
     }
 
-    const encryptedPass = this._passwordEncryptor.encrypt(newPassword);
+    const encryptedPass = await this._passwordEncryptor.encrypt(newPassword);
     const updatedUser = new User({ id, name, info, password: encryptedPass });
     await this._userRepository.save(updatedUser);
   }

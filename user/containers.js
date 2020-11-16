@@ -2,6 +2,7 @@ const Awilix = require('awilix');
 
 const RegisterUser = require('./application/register-user');
 const LoginUser = require('./application/login-user');
+const UpdateUser = require('./application/update-user');
 
 const UserRepository = require('./domain/user-repository');
 const PasswordEncryptor = require('./domain/password-encryptor');
@@ -18,6 +19,7 @@ const container = Awilix.createContainer({
 container.register({
   registerUser: Awilix.asClass(RegisterUser),
   loginUser: Awilix.asClass(LoginUser),
+  updateUser: Awilix.asClass(UpdateUser),
   userRepository: Awilix.asFunction(UserRepository),
   passwordEncryptor: Awilix.asFunction(PasswordEncryptor),
   authenticationService: Awilix.asClass(AuthenticationService),
