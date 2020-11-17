@@ -7,7 +7,7 @@
       dense
       dark
     >
-      <v-toolbar-title>App</v-toolbar-title>
+      <v-toolbar-title>Voicemod</v-toolbar-title>
     </v-app-bar>
 
     <v-main id="main-content">
@@ -28,7 +28,4 @@ export default {
 </script>
 
 <style>
-  #main-content {
-    margin-top: 48px;
-  }
 </style>
