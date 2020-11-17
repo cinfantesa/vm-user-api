@@ -16,21 +16,22 @@
 </template>
 
 <script>
-export default {}
+  export default {}
 </script>
 
 <style scoped>
-#login {
-  width: 460px;
-  height: 100%;
-}
+  #login {
+    padding-top: 40px;
+    width: 460px;
+    height: 100%;
+  }
 
-#submit {
-  margin-top: 60px;
-  width: 100%;
-}
+  #submit {
+    margin-top: 60px;
+    width: 100%;
+  }
 
-.v-text-field {
-  padding-top: 40px;
-}
+  .v-text-field {
+    padding-top: 40px;
+  }
 </style>
