@@ -1,15 +1,16 @@
 <template>
-  <v-app>
+  <v-app id="app-container">
     <v-app-bar
+      id="appBar"
       app
       color="primary"
       dense
       dark
     >
-      <v-toolbar-title>Login</v-toolbar-title>
+      <v-toolbar-title>App</v-toolbar-title>
     </v-app-bar>
 
-    <v-main>
+    <v-main id="main-content">
       <router-view/>
     </v-main>
   </v-app>
@@ -22,7 +23,12 @@ export default {
   components: {},
 
   data: () => ({
-    //
   }),
 };
 </script>
+
+<style>
+  #main-content {
+    margin-top: 48px;
+  }
+</style>

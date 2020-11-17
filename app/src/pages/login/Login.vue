@@ -1,10 +1,9 @@
 <template>
-  <p>{{name}}</p>
+  <p>Login</p>
 </template>
 
 <script>
 export default {
-  name: "Login"
 }
 </script>
 
