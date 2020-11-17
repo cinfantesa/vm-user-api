@@ -1,37 +1,78 @@
 <template>
   <v-container id="login">
-    <v-layout column>
-      <v-flex align-self-center><p>Introduce tus credenciales</p></v-flex>
-      <v-flex>
-        <v-text-field label="Email" hide-details="auto"/>
-      </v-flex>
-      <v-flex>
-        <v-text-field label="Password" hide-details="auto"/>
-      </v-flex>
-      <v-flex>
-        <v-btn id="submit" depressed color="primary">Entrar</v-btn>
-      </v-flex>
-    </v-layout>
+    <v-form
+        ref="loginForm"
+        v-model="valid"
+        lazy-validation
+    >
+      <v-layout column>
+        <v-flex align-self-center><p>Type your credentials</p></v-flex>
+        <v-flex>
+          <v-text-field
+              required
+              :rules="emailRules"
+              v-model="email"
+              label="Email"
+              hide-details="auto"/>
+        </v-flex>
+        <v-flex>
+          <v-text-field
+              required
+              :rules="passwordRules"
+              v-model="password"
+              label="Password"
+              hide-details="auto"/>
+        </v-flex>
+        <v-flex>
+          <v-btn
+              id="submit"
+              :disabled="!valid"
+              depressed color="primary"
+              @click="validate">
+            Login
+          </v-btn>
+        </v-flex>
+      </v-layout>
+    </v-form>
   </v-container>
 </template>
 
 <script>
-  export default {}
+export default {
+  name: 'Login',
+  data: () => ({
+    valid: true,
+    email: '',
+    emailRules: [
+      v => !!v || 'E-mail is required',
+      v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+    ],
+    password: '',
+    passwordRules: [
+      v => !!v || 'Password is required'
+    ]
+  }),
+  methods: {
+    validate() {
+      this.$refs.loginForm.validate();
+    }
+  }
+}
 </script>
 
 <style scoped>
-  #login {
-    padding-top: 40px;
-    width: 460px;
-    height: 100%;
-  }
+#login {
+  padding-top: 40px;
+  width: 460px;
+  height: 100%;
+}
 
-  #submit {
-    margin-top: 60px;
-    width: 100%;
-  }
+#submit {
+  margin-top: 60px;
+  width: 100%;
+}
 
-  .v-text-field {
-    padding-top: 40px;
-  }
+.v-text-field {
+  padding-top: 40px;
+}
 </style>
