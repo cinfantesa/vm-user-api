@@ -41,7 +41,8 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios';
+import router from '../../router';
 
 export default {
   name: 'Login',
@@ -64,10 +65,13 @@ export default {
         const response = await axios.post('http://localhost:3000/login', {
           email: this.email,
           password: this.password
-        });
-        alert(response)
+        })
+
+        const { token } = response.data
+        localStorage.setItem('token', token)
+        await router.push({ name: 'Home' })
       } catch (ex) {
-        alert(ex);
+        console.error(ex)
       }
     }
   }
