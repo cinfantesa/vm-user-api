@@ -28,9 +28,12 @@
               id="submit"
               :disabled="!valid"
               depressed color="primary"
-              @click="validate">
+              @click="login">
             Login
           </v-btn>
+        </v-flex>
+        <v-flex align-self-center>
+          <router-link to="register">Register</router-link>
         </v-flex>
       </v-layout>
     </v-form>
@@ -38,6 +41,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: 'Login',
   data: () => ({
@@ -53,8 +58,17 @@ export default {
     ]
   }),
   methods: {
-    validate() {
+    async login() {
       this.$refs.loginForm.validate();
+      try {
+        const response = await axios.post('http://localhost:3000/login', {
+          email: this.email,
+          password: this.password
+        });
+        alert(response)
+      } catch (ex) {
+        alert(ex);
+      }
     }
   }
 }
