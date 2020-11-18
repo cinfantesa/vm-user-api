@@ -80,7 +80,6 @@ export default {
 
 <style scoped>
 #login {
-  padding-top: 40px;
   width: 460px;
   height: 100%;
 }
