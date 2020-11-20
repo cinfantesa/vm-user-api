@@ -54,7 +54,7 @@
           <v-btn
               id="submit"
               depressed color="primary">
-            Register
+            Update
           </v-btn>
         </v-layout>
       </v-layout>
@@ -74,5 +74,9 @@ export default {}
 
 .v-text-field {
   /*padding: 30px;*/
+}
+
+.v-btn {
+  padding-left: 20px;
 }
 </style>

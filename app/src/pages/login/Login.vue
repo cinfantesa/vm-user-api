@@ -20,6 +20,7 @@
               required
               :rules="passwordRules"
               v-model="password"
+              :type="'password'"
               label="Password"
               hide-details="auto"/>
         </v-flex>
