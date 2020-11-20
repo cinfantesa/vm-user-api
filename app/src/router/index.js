@@ -7,10 +7,10 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    beforeEnter: (to, from, next) => {
-      if (localStorage.getItem('token')) next({ name: 'Home' })
-      else next()
-    },
+    // beforeEnter: (to, from, next) => {
+    //   if (localStorage.getItem('token')) next({ name: 'Home' })
+    //   else next()
+    // },
     component: () => import('@/pages/login/Login')
   },
   {
@@ -19,8 +19,8 @@ const routes = [
     component: () => import('@/pages/register/Register')
   },
   {
-    path: '/home',
-    name: 'Home',
+    path: '/user/:id',
+    name: 'User',
     component: () => import('@/pages/home/Home')
   }
 ]

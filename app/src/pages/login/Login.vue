@@ -10,7 +10,7 @@
         <v-flex>
           <v-text-field
               required
-              :rules="emailRules"
+              :rules="validations.email"
               v-model="email"
               label="Email"
               hide-details="auto"/>
@@ -18,7 +18,7 @@
         <v-flex>
           <v-text-field
               required
-              :rules="passwordRules"
+              :rules="validations.password"
               v-model="password"
               :type="'password'"
               label="Password"
@@ -38,41 +38,58 @@
         </v-flex>
       </v-layout>
     </v-form>
+    <v-snackbar
+        v-model="snackbar"
+        :timeout="5000"
+    >
+      {{ error }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn
+            color="blue"
+            text
+            v-bind="attrs"
+            @click="snackbar = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </v-container>
 </template>
 
 <script>
-import axios from 'axios';
-import router from '../../router';
+import router from '../../router'
+import { validations } from '@/shared/user-validations'
+import UserService from '@/shared/user-service'
 
 export default {
   name: 'Login',
   data: () => ({
     valid: true,
+    validations: {
+      email: validations.email,
+      password: validations.password
+    },
+    error: '',
+    snackbar: false,
     email: '',
-    emailRules: [
-      v => !!v || 'E-mail is required',
-      v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-    ],
-    password: '',
-    passwordRules: [
-      v => !!v || 'Password is required'
-    ]
+    password: ''
   }),
   methods: {
     async login() {
-      this.$refs.loginForm.validate();
-      try {
-        const response = await axios.post('http://localhost:3000/login', {
-          email: this.email,
-          password: this.password
-        })
+      if (this.$refs.loginForm.validate()) {
+        try {
+          await UserService.login({
+            email: this.email,
+            password: this.password
+          })
 
-        const { token } = response.data
-        localStorage.setItem('token', token)
-        await router.push({ name: 'Home' })
-      } catch (ex) {
-        console.error(ex)
+          await router.push({ name: 'Home' })
+        } catch (ex) {
+          this.error = ex.message
+          this.snackbar = true
+        }
       }
     }
   }
