@@ -27,7 +27,7 @@
         <v-flex>
           <v-btn
               id="submit"
-              :disabled="!valid"
+              :disabled="!valid || isLoading"
               depressed color="primary"
               @click="login">
             Login
@@ -66,6 +66,7 @@ import UserService from '@/shared/user-service'
 export default {
   name: 'Login',
   data: () => ({
+    isLoading: false,
     valid: true,
     validations: {
       email: validations.email,
@@ -80,15 +81,17 @@ export default {
     async login() {
       if (this.$refs.loginForm.validate()) {
         try {
+          this.isLoading = true;
           await UserService.login({
             email: this.email,
             password: this.password
           })
-
           await router.push({ name: 'Home' })
         } catch (ex) {
           this.error = ex.message
           this.snackbar = true
+        } finally {
+          this.isLoading = false;
         }
       }
     }

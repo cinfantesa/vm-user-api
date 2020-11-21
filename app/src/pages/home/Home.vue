@@ -82,13 +82,14 @@
           <v-btn
               id="remove"
               @click="remove"
+              :disabled="isLoading"
               depressed color="error">
             Remove
           </v-btn>
           <v-btn
               id="submit"
               @click="update"
-              :disabled="!valid"
+              :disabled="!valid || isLoading"
               depressed color="primary">
             Update
           </v-btn>
@@ -105,6 +106,7 @@ import router from "@/router";
 
 export default {
   data: () => ({
+    isLoading: false,
     valid: true,
     validations: {
       name: validations.name,
@@ -121,18 +123,28 @@ export default {
   methods: {
     async remove() {
       try {
+        this.isLoading = true
         await UserService.remove(this.user)
         await router.push({ name: 'Login' })
       } catch (ex) {
         console.error(ex)
+      } finally {
+        this.isLoading = false
       }
     },
     async update() {
       if (this.$refs.homeForm.validate()) {
-        await UserService.update({
-          user: this.user,
-          newPassword: this.newPassword
-        })
+        try {
+          this.isLoading = true
+          await UserService.update({
+            user: this.user,
+            newPassword: this.newPassword
+          })
+        } catch (ex) {
+          console.error(ex)
+        } finally {
+          this.isLoading = false
+        }
       }
     }
   }

@@ -78,7 +78,7 @@
           </v-btn>
           <v-btn
               id="submit"
-              :disabled="!valid"
+              :disabled="!valid || isLoading"
               @click="register"
               depressed color="primary">
             Register
@@ -97,6 +97,7 @@ import User from '@/shared/user';
 
 export default {
   data: () => ({
+    isLoading: false,
     valid: true,
     validations: {
       name: validations.name,
@@ -113,10 +114,13 @@ export default {
     async register() {
       if (this.$refs.registerForm.validate()) {
         try {
+          this.isLoading = true
           await UserService.register(this.user)
           await router.push({ name: 'Login' })
         } catch (ex) {
           console.error(ex)
+        } finally {
+          this.isLoading = false
         }
       }
     },
