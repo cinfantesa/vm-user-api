@@ -39,6 +39,12 @@
         </v-layout>
         <v-flex align-self-end>
           <v-btn
+              id="back"
+              @click="back"
+              depressed color="primary">
+            Back
+          </v-btn>
+          <v-btn
                 id="submit"
                 :disabled="!valid"
                 @click="register"
@@ -73,14 +79,17 @@ export default {
   }),
   methods: {
     async register() {
-      this.$refs.registerForm.validate();
-
-      try {
-        await UserService.register(this.user)
-        await router.push({ name: 'Login' })
-      } catch (ex) {
-        console.error(ex)
+      if (this.$refs.registerForm.validate()) {
+        try {
+          await UserService.register(this.user)
+          await router.push({ name: 'Login' })
+        } catch (ex) {
+          console.error(ex)
+        }
       }
+    },
+    back() {
+      router.push({ name: 'Login'})
     }
   }
 }
@@ -94,5 +103,9 @@ export default {
 
 .v-text-field {
   padding: 30px;
+}
+
+.v-btn {
+  margin-left: 20px;
 }
 </style>

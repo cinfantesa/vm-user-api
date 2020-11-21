@@ -5,7 +5,7 @@ const email = [
 
 const password = [
   v => !!v || 'Password is required',
-  v => v.length >= 7 || 'Password required length is 7'
+  v => v && v.length >= 7 || 'Password required length is 7'
 ]
 
 const name = [

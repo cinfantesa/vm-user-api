@@ -19,8 +19,8 @@ const routes = [
     component: () => import('@/pages/register/Register')
   },
   {
-    path: '/user/:id',
-    name: 'User',
+    path: '/home',
+    name: 'Home',
     component: () => import('@/pages/home/Home')
   }
 ]
