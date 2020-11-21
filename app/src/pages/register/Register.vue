@@ -8,33 +8,65 @@
       <v-layout column>
         <v-layout>
           <v-flex>
-            <v-text-field required v-model="user.name" :rules="validations.name" label="Name" hide-details="auto"/>
+            <v-text-field
+                required
+                v-model="user.name"
+                :rules="validations.name"
+                label="Name"
+                hide-details="auto"/>
           </v-flex>
           <v-flex>
-            <v-text-field required v-model="user.surnames" :rules="validations.surnames" label="Surnames"
-                          hide-details="auto"/>
+            <v-text-field
+                required
+                v-model="user.surnames"
+                :rules="validations.surnames"
+                label="Surnames"
+                hide-details="auto"/>
           </v-flex>
         </v-layout>
         <v-layout>
           <v-flex>
-            <v-text-field required v-model="user.email" :rules="validations.email" label="Email" hide-details="auto"/>
+            <v-text-field
+                required
+                v-model="user.email"
+                :rules="validations.email"
+                label="Email"
+                hide-details="auto"/>
           </v-flex>
           <v-flex>
-            <v-text-field required v-model="user.password" :rules="validations.password" :type="'password'"
-                          label="Password" hide-details="auto"/>
+            <v-text-field
+                required
+                v-model="user.password"
+                :rules="validations.password"
+                :type="'password'"
+                label="Password"
+                hide-details="auto"/>
           </v-flex>
         </v-layout>
         <v-layout>
           <v-flex>
-            <v-text-field required v-model="user.postalCode" :rules="validations.postalCode" label="Postal Code"
-                          hide-details="auto"/>
+            <v-text-field
+                required
+                v-model="user.postalCode"
+                :rules="validations.postalCode"
+                label="Postal Code"
+                hide-details="auto"/>
           </v-flex>
           <v-flex>
-            <v-text-field required v-model="user.country" :rules="validations.country" label="Country"
-                          hide-details="auto"/>
+            <v-text-field
+                required
+                v-model="user.country"
+                :rules="validations.country"
+                label="Country"
+                hide-details="auto"/>
           </v-flex>
           <v-flex>
-            <v-text-field required v-model="user.phone" :rules="validations.phone" label="Phone" hide-details="auto"/>
+            <v-text-field
+                required
+                v-model="user.phone"
+                :rules="validations.phone"
+                label="Phone"
+                hide-details="auto"/>
           </v-flex>
         </v-layout>
         <v-flex align-self-end>
@@ -45,11 +77,11 @@
             Back
           </v-btn>
           <v-btn
-                id="submit"
-                :disabled="!valid"
-                @click="register"
-                depressed color="primary">
-              Register
+              id="submit"
+              :disabled="!valid"
+              @click="register"
+              depressed color="primary">
+            Register
           </v-btn>
         </v-flex>
       </v-layout>
@@ -89,7 +121,7 @@ export default {
       }
     },
     back() {
-      router.push({ name: 'Login'})
+      router.push({ name: 'Login' })
     }
   }
 }
