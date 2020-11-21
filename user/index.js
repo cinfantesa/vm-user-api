@@ -15,7 +15,7 @@ app.use(cors())
 app.use(bodyParser.json());
 app.use(jsonContentType);
 
-app.use(userRoutes);
+app.use('/api', userRoutes);
 
 app.use(errorHandler);
 

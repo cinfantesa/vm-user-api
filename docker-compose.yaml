@@ -1,6 +1,22 @@
 version: '3'
 
 services:
+  proxy:
+    build: proxy
+    image: cinfantes/vm-proxy
+    ports:
+      - "80:80"
+    container_name: vm-proxy
+  user:
+    build: user
+    image: cinfantes/vm-user
+    environment:
+      - MONGO_URI=mongodb://mongo:27017
+    container_name: vm-user
+  app:
+    build: app
+    image: cinfantes/vm-app
+    container_name: vm-app
   mongo:
     image: mongo:4.4.1
     ports:

@@ -1,10 +1,10 @@
 FROM node:12.18-slim
-LABEL authors="GRUPO ASV"
+LABEL authors="cristobal.infantes@gmail.com"
 WORKDIR /usr/node
 EXPOSE 3000
-COPY . .
+COPY --chown=node:node . .
 
-RUN chown -R node:node /usr/node
+RUN yarn
 
 USER node
 CMD ["yarn", "start"]
