@@ -7,21 +7,21 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    // beforeEnter: (to, from, next) => {
-    //   if (localStorage.getItem('token')) next({ name: 'Home' })
-    //   else next()
-    // },
-    component: () => import('@/pages/login/Login')
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('token')) next({ name: 'Home' })
+      else next()
+    },
+    component: () => import('@/views/login/Login')
   },
   {
     path: '/register',
     name: 'Register',
-    component: () => import('@/pages/register/Register')
+    component: () => import('@/views/register/Register')
   },
   {
     path: '/home',
     name: 'Home',
-    component: () => import('@/pages/home/Home')
+    component: () => import('@/views/home/Home')
   }
 ]
 
@@ -29,9 +29,9 @@ const router = new VueRouter({
   routes
 })
 
-// router.beforeEach((to, from, next) => {
-//   if(to.name !== 'Login' && !localStorage.getItem('token')) next({ name: 'Login' })
-//   else next()
-// })
+router.beforeEach((to, from, next) => {
+  if(to.name !== 'Login' && !localStorage.getItem('token')) next({ name: 'Login' })
+  else next()
+})
 
 export default router

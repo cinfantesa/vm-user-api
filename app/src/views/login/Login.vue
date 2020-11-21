@@ -38,23 +38,6 @@
         </v-flex>
       </v-layout>
     </v-form>
-    <v-snackbar
-        v-model="snackbar"
-        :timeout="5000"
-    >
-      {{ error }}
-
-      <template v-slot:action="{ attrs }">
-        <v-btn
-            color="blue"
-            text
-            v-bind="attrs"
-            @click="snackbar = false"
-        >
-          Close
-        </v-btn>
-      </template>
-    </v-snackbar>
   </v-container>
 </template>
 
@@ -72,8 +55,6 @@ export default {
       email: validations.email,
       password: validations.password
     },
-    error: '',
-    snackbar: false,
     email: '',
     password: ''
   }),
@@ -87,9 +68,6 @@ export default {
             password: this.password
           })
           await router.push({ name: 'Home' })
-        } catch (ex) {
-          this.error = ex.message
-          this.snackbar = true
         } finally {
           this.isLoading = false;
         }

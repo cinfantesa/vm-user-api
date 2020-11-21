@@ -14,7 +14,6 @@ export default class UserService {
     const decodedToken = await jwtDecode(token)
     this.loggedUser = new User(decodedToken)
     localStorage.setItem('token', token)
-    return token
   }
 
   static async register(user) {

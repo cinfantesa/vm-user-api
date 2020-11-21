@@ -126,8 +126,6 @@ export default {
         this.isLoading = true
         await UserService.remove(this.user)
         await router.push({ name: 'Login' })
-      } catch (ex) {
-        console.error(ex)
       } finally {
         this.isLoading = false
       }
@@ -140,8 +138,8 @@ export default {
             user: this.user,
             newPassword: this.newPassword
           })
-        } catch (ex) {
-          console.error(ex)
+          this.user.password = ''
+          this.newPassword = ''
         } finally {
           this.isLoading = false
         }
