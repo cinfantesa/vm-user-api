@@ -5,13 +5,14 @@ import ObjectID from "bson-objectid";
 
 const url = 'http://localhost:3000'
 export default class UserService {
-  user
+  loggedUser
 
   static async login({ email, password }) {
     const response = await axios.post(`${url}/login`, { email, password })
 
     const { token } = response.data
-    this.user = new User(jwtDecode(token))
+    const decodedToken = await jwtDecode(token)
+    this.loggedUser = new User(decodedToken)
     localStorage.setItem('token', token)
     return token
   }

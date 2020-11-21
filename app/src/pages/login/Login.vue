@@ -85,6 +85,7 @@ export default {
             password: this.password
           })
 
+          console.log('loggedUser', UserService.loggedUser)
           await router.push({ name: 'Home' })
         } catch (ex) {
           this.error = ex.message

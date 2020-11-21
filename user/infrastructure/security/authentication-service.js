@@ -18,7 +18,15 @@ class AuthenticationService {
       throw new Error('Password invalid');
     }
 
-    const { ['password']: ignoredPassword, ...payload } = foundUser;
+    const payload = {
+      id: foundUser.id,
+      email: foundUser.info.email,
+      name: foundUser.name.firstName,
+      surnames: foundUser.name.surnames,
+      postalCode: foundUser.info.postalCode,
+      country: foundUser.info.country,
+      phone: foundUser.info.phone
+    }
     return jwt.sign(payload, secret, {
       expiresIn: expiration
     });
