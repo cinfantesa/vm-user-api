@@ -44,7 +44,7 @@ export default {
     this.error = err
     this.snackbar = true
   }
-};
+}
 </script>
 
 <style>

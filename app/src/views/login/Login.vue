@@ -44,7 +44,6 @@
 <script>
 import router from '../../router'
 import { validations } from '@/shared/user-validations'
-import UserService from '@/shared/user-service'
 
 export default {
   name: 'Login',
@@ -63,7 +62,7 @@ export default {
       if (this.$refs.loginForm.validate()) {
         try {
           this.isLoading = true;
-          await UserService.login({
+          await this.$userService.login({
             email: this.email,
             password: this.password
           })

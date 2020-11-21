@@ -92,7 +92,6 @@
 <script>
 import router from '@/router'
 import { validations } from '@/shared/user-validations'
-import UserService from '@/shared/user-service'
 import User from '@/shared/user';
 
 export default {
@@ -115,7 +114,7 @@ export default {
       if (this.$refs.registerForm.validate()) {
         try {
           this.isLoading = true
-          await UserService.register(this.user)
+          await this.$userService.register(this.user)
           await router.push({ name: 'Login' })
         } catch (ex) {
           console.error(ex)

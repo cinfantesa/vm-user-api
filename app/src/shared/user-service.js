@@ -1,22 +1,20 @@
 import axios from 'axios'
-import jwtDecode from 'jwt-decode';
-import User from '@/shared/user';
-import ObjectID from "bson-objectid";
+import ObjectID from 'bson-objectid';
 
 export default class UserService {
-  loggedUser
+  constructor({ sessionService }) {
+    this._sessionService = sessionService
+  }
 
-  static async login({ email, password }) {
+  async login({ email, password }) {
     const url = `${process.env.VUE_APP_API_URL}/login`
     const response = await axios.post(url, { email, password })
 
     const { token } = response.data
-    const decodedToken = await jwtDecode(token)
-    this.loggedUser = new User(decodedToken)
-    localStorage.setItem('token', token)
+    this._sessionService.loginUser(token)
   }
 
-  static async register(user) {
+  async register(user) {
     await axios.post(`${process.env.VUE_APP_API_URL}/users`, {
       id: ObjectID(),
       email: user.email,
@@ -29,9 +27,9 @@ export default class UserService {
     })
   }
 
-  static async update({ user, newPassword }) {
+  async update({ user, newPassword }) {
     const config = {
-      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      headers: { Authorization: `Bearer ${this._sessionService.token}` }
     };
 
     await axios.put(`${process.env.VUE_APP_API_URL}/users/${user.id}`, {
@@ -46,12 +44,11 @@ export default class UserService {
     }, config)
   }
 
-  static async remove(user) {
+  async remove(user) {
     const config = {
-      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      headers: { Authorization: `Bearer ${this._sessionService.token}` }
     };
     await axios.delete(`${process.env.VUE_APP_API_URL}/users/${user.id}`, config)
-    this.loggedUser = null
-    localStorage.removeItem('token')
+    this._sessionService.remove()
   }
 }

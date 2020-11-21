@@ -100,7 +100,6 @@
 </template>
 
 <script>
-import UserService from '@/shared/user-service';
 import { validations } from '@/shared/user-validations';
 import router from "@/router";
 
@@ -117,14 +116,17 @@ export default {
       country: validations.country,
       phone: validations.phone
     },
-    user: UserService.loggedUser,
+    user: '',
     newPassword: ''
   }),
+  created() {
+    this.user = this.$sessionService.user
+  },
   methods: {
     async remove() {
       try {
         this.isLoading = true
-        await UserService.remove(this.user)
+        await this.$userService.remove(this.user)
         await router.push({ name: 'Login' })
       } finally {
         this.isLoading = false
@@ -134,7 +136,7 @@ export default {
       if (this.$refs.homeForm.validate()) {
         try {
           this.isLoading = true
-          await UserService.update({
+          await this.$userService.update({
             user: this.user,
             newPassword: this.newPassword
           })
