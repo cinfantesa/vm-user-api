@@ -52,10 +52,10 @@
 </template>
 
 <script>
-import axios from 'axios'
 import router from '@/router'
-import ObjectID from 'bson-objectid'
 import { validations } from '@/shared/user-validations'
+import UserService from '@/shared/user-service'
+import User from '@/shared/user';
 
 export default {
   data: () => ({
@@ -69,23 +69,14 @@ export default {
       country: validations.country,
       phone: validations.phone
     },
-    user: {
-      email: '',
-      password: '',
-      firstName: '',
-      surnames: '',
-      postalCode: '',
-      country: '',
-      phone: ''
-    }
+    user: new User({})
   }),
   methods: {
     async register() {
       this.$refs.registerForm.validate();
 
       try {
-        await axios.post('http://localhost:3000/users',
-            Object.assign({}, this.user, { id: ObjectID() }))
+        await UserService.register(this.user)
         await router.push({ name: 'Login' })
       } catch (ex) {
         console.error(ex)
