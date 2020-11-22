@@ -34,7 +34,7 @@ const request = supertest(app);
 describe('User controller', () => {
   describe('POST register user', () => {
     test('should return 422 when sending empty body', async () => {
-      const res = await request.post('/users');
+      const res = await request.post('/api/users');
 
       const expectedErrors = [
         { message: 'Field cannot be blank', field: 'id' },
@@ -50,7 +50,7 @@ describe('User controller', () => {
     });
 
     test('should return 422 when invalid email', async () => {
-      const res = await request.post('/users')
+      const res = await request.post('/api/users')
         .send({
           id: 'id',
           name: 'name',
@@ -69,7 +69,7 @@ describe('User controller', () => {
     });
 
     test('should return 422 when password is shorter than 7', async () => {
-      const res = await request.post('/users')
+      const res = await request.post('/api/users')
         .send({
           id: 'id',
           name: 'name',
@@ -88,7 +88,7 @@ describe('User controller', () => {
     });
 
     test('should return 201 when user is registered', async () => {
-      const res = await request.post('/users')
+      const res = await request.post('/api/users')
         .send({
           id: 'id',
           name: 'name',
@@ -103,7 +103,7 @@ describe('User controller', () => {
 
   describe('POST login user', () => {
     test('should return 422 status when login without passing values', async () => {
-      const res = await request.post('/login')
+      const res = await request.post('/api/login')
         .send({});
 
       const expectedErrors = [
@@ -118,7 +118,7 @@ describe('User controller', () => {
     });
 
     test('should return 422 status when login providing invalid email', async () => {
-      const res = await request.post('/login')
+      const res = await request.post('/api/login')
         .send({
           password: 'password',
           email: 'email'
@@ -138,7 +138,7 @@ describe('User controller', () => {
       const token = 'token';
       loginUserMock.login.mockReturnValue(token);
 
-      const res = await request.post('/login')
+      const res = await request.post('/api/login')
         .send({
           password: 'password',
           email: 'email@email.com'
@@ -153,7 +153,7 @@ describe('User controller', () => {
     test('should return 500 status when login an error ocurred', async () => {
       loginUserMock.login.mockRejectedValue('error');
 
-      const res = await request.post('/login')
+      const res = await request.post('/api/login')
         .send({
           password: 'password',
           email: 'email@email.com'
@@ -166,7 +166,7 @@ describe('User controller', () => {
 
   describe('PUT update user', () => {
     test('should return 422 when sending empty body', async () => {
-      const res = await request.put('/users/1')
+      const res = await request.put('/api/users/1')
         .send({});
 
       const expectedErrors = [
@@ -187,7 +187,7 @@ describe('User controller', () => {
     });
 
     test('should return 422 status when invalid email', async () => {
-      const res = await request.put('/users/1')
+      const res = await request.put('/api/users/1')
         .send({
           id: 'id',
           name: 'name',
@@ -211,7 +211,7 @@ describe('User controller', () => {
     });
 
     test('should return 422 status when password is shorter than 7', async () => {
-      const res = await request.put('/users/1')
+      const res = await request.put('/api/users/1')
         .send({
           id: 'id',
           name: 'name',
@@ -237,7 +237,7 @@ describe('User controller', () => {
     test('should return 204 status when updating a user correctly', async () => {
       updateUserMock.update = () => {};
 
-      const res = await request.put('/users/1')
+      const res = await request.put('/api/users/1')
         .send({
           id: 'id',
           name: 'name',
@@ -257,7 +257,7 @@ describe('User controller', () => {
 
   describe('DELETE user', () => {
     test('should return 204 status when deleting a user', async () => {
-      const res = await request.delete('/users/1').send();
+      const res = await request.delete('/api/users/1').send();
 
       const { status } = res;
       expect(status).toBe(204);
@@ -266,7 +266,7 @@ describe('User controller', () => {
     test('should return 500 status when deleting a user an error produced', async () => {
       deleteUserMock.delete.mockRejectedValue('Error');
 
-      const res = await request.delete('/users/1').send();
+      const res = await request.delete('/api/users/1').send();
 
       const { status, body, headers } = res;
       expect(status).toBe(500);
