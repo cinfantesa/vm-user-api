@@ -13,6 +13,7 @@
       <router-view/>
     </v-main>
     <v-snackbar
+        id="errorSnackbar"
         v-model="snackbar"
         :timeout="5000">
       {{ error }}

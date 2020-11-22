@@ -8,7 +8,7 @@ const routes = [
     path: '/login',
     name: 'Login',
     beforeEnter: (to, from, next) => {
-      if (localStorage.getItem('token')) next({ name: 'Home' })
+      if (Vue.prototype.$sessionService.token) next({ name: 'Home' })
       else next()
     },
     component: () => import('@/views/login/Login')
@@ -30,7 +30,7 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if(to.name !== 'Login' && to.name !== 'Register' && !localStorage.getItem('token')) next({ name: 'Login' })
+  if(to.name !== 'Login' && to.name !== 'Register' && !Vue.prototype.$sessionService.token) next({ name: 'Login' })
   else next()
 })
 
