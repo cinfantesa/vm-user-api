@@ -34,7 +34,7 @@ jobs:
             ${{ runner.os }}-yarn-
 
       - name: Install
-        run: cd api && yarn install
+        run: cd user && yarn install
 
       - name: Test
-        run: cd api && yarn test
+        run: cd user && yarn test
